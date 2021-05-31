@@ -1,0 +1,19 @@
+int whenStarted1() {
+  Brain.Screen.setCursor(5, 5);
+  Brain.Screen.print("Ping-Pong Ball Launcher, by Pedro. D");
+  wait(1.0, seconds);
+  while (true) {
+    Brain_precision = 3;
+    Brain.Screen.setCursor(0, 0);
+    x = Controller1.Axis1.position();
+    Brain.Screen.setCursor(20, x);
+    Brain.Screen.clearScreen();
+    Brain.Screen.print("-O-");
+    Brain.Screen.setCursor(100, 44);
+    Brain.Screen.print("Right");
+    Brain.Screen.setCursor(99, 1);
+    Brain.Screen.print("Left");
+  wait(5, msec);
+  }
+  return 0;
+}
