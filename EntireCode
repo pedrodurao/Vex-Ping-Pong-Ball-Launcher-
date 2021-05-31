@@ -1,0 +1,90 @@
+int Brain_precision = 0, Console_precision = 0, Controller1_precision = 0;
+
+float x, y, speedPOS1Left, speedPOS1RIGHT;
+
+// "when started" hat block
+int whenStarted1() {
+  Brain.Screen.setCursor(5, 5);
+  Brain.Screen.print("Ping-Pong Ball Launcher, by Pedro. D");
+  wait(1.0, seconds);
+  while (true) {
+    Brain_precision = 3;
+    Brain.Screen.setCursor(0, 0);
+    x = Controller1.Axis1.position();
+    Brain.Screen.setCursor(20, x);
+    Brain.Screen.clearScreen();
+    Brain.Screen.print("-O-");
+    Brain.Screen.setCursor(100, 44);
+    Brain.Screen.print("Right");
+    Brain.Screen.setCursor(99, 1);
+    Brain.Screen.print("Left");
+  wait(5, msec);
+  }
+  return 0;
+}
+
+// "when started" hat block
+int whenStarted2() {
+  while (true) {
+    speedPOS1RIGHT = Controller1.Axis1.position();
+    if (Controller1.Axis1.position() > 0.0) {
+      speedPOS1RIGHT = Controller1.Axis1.position();
+    }
+    else {
+      RightMotor.setTimeout(1.0, sec);
+      RightMotor.setVelocity(0.0, percent);
+    }
+    RightMotor.setVelocity(speedPOS1RIGHT, percent);
+    RightMotor.spin(forward);
+  wait(5, msec);
+  }
+  return 0;
+}
+
+// "when started" hat block
+int whenStarted3() {
+  while (true) {
+    speedPOS1Left = Controller1.Axis1.position();
+    if (Controller1.Axis1.position() < 0.0) {
+      speedPOS1Left = Controller1.Axis1.position();
+    }
+    else {
+      LeftMotor.setTimeout(1.0, sec);
+      LeftMotor.setVelocity(0.0, percent);
+    }
+    LeftMotor.setVelocity(speedPOS1Left, percent);
+    LeftMotor.spin(forward);
+  wait(5, msec);
+  }
+  return 0;
+}
+
+// "when started" hat block
+int whenStarted4() {
+  while (true) {
+    if (Controller1.Axis2.position() == 100.0) {
+      LeftMotor.setVelocity(100.0, percent);
+      LeftMotor.spin(reverse);
+      RightMotor.setVelocity(100.0, percent);
+      RightMotor.spin(reverse);
+    }
+  wait(5, msec);
+  }
+  return 0;
+}
+
+
+int main() {
+  // post event registration
+
+  // set default print color to black
+  printf("\033[30m");
+
+  // wait for rotation sensor to fully initialize
+  wait(30, msec);
+
+  vex::task ws1(whenStarted2);
+  vex::task ws2(whenStarted3);
+  vex::task ws3(whenStarted4);
+  whenStarted1();
+}
